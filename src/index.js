@@ -37,23 +37,6 @@ class Board extends React.Component {
                     </div>
                 );
             })
-            // <div>
-            //     <div className="board-row">
-            //         {this.renderSquare(0)}
-            //         {this.renderSquare(1)}
-            //         {this.renderSquare(2)}
-            //     </div>
-            //     <div className="board-row">
-            //         {this.renderSquare(3)}
-            //         {this.renderSquare(4)}
-            //         {this.renderSquare(5)}
-            //     </div>
-            //     <div className="board-row">
-            //         {this.renderSquare(6)}
-            //         {this.renderSquare(7)}
-            //         {this.renderSquare(8)}
-            //     </div>
-            // </div>
         );
     }
 }
@@ -70,7 +53,11 @@ class Game extends React.Component {
             xIsNext: true,
             // -1 is before game starts
             indexHistory: [-1],
+            isDescending: true,
         };
+
+        this.toggleOrder = this.toggleOrder.bind(this);
+
     }
 
     handleClick(i) {
@@ -79,7 +66,6 @@ class Game extends React.Component {
         const squares = current.squares.slice();
         const indexHistory = this.state.indexHistory.slice(0, this.state.stepNumber + 1);
 
-        console.log(this.state.currentIndex);
         if (calculateWinner(squares) || squares[i]) {
             return;
         }
@@ -101,6 +87,13 @@ class Game extends React.Component {
         });
     }
 
+    // Button function that toggle ascending/descending order
+    toggleOrder() {
+        this.setState({
+            isDescending: !this.state.isDescending,
+        });
+    }
+
     render() {
 
         const history = this.state.history;
@@ -108,6 +101,7 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
+
             const coord = (move % 2) === 0 ?
             "O," + calculateCoordinates(this.state.indexHistory[move]) :
             "X," + calculateCoordinates(this.state.indexHistory[move])
@@ -119,6 +113,7 @@ class Game extends React.Component {
                     <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
                 </li>
             );
+
         });
 
         let status;
@@ -138,7 +133,8 @@ class Game extends React.Component {
             </div>
             <div className="game-info">
             <div>{status}</div>
-            <ol>{moves}</ol>
+            <button onClick={this.toggleOrder}>Toggle Order</button>
+            <ul>{this.state.isDescending ? moves : moves.reverse()}</ul>
             </div>
         </div>
         );
