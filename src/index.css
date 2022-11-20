@@ -6,7 +6,11 @@ body {
   ol, ul {
     padding-left: 30px;
   }
-  
+
+  a:hover {
+    font-weight: bold
+  }
+
   .board-row:after {
     clear: both;
     content: "";
