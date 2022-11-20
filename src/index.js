@@ -95,8 +95,9 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            console.log(move);
-            const coord = calculateCoordinates(this.state.indexHistory[move]);
+            const coord = (move % 2) === 0 ?
+            "O " + calculateCoordinates(this.state.indexHistory[move]) :
+            "X " + calculateCoordinates(this.state.indexHistory[move])
             const desc = move ?
                 'Go to move #' + move + " " + coord:
                 'Go to game start';
@@ -166,7 +167,9 @@ function calculateCoordinates(index) {
         [2, 1],
         [2, 2],
     ];
-    return coordinates[index];
+    if (index != -1){
+        return coordinates[index].reverse();
+    }
 }
 // ========================================
 
