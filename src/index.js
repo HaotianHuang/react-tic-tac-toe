@@ -64,10 +64,6 @@ class Game extends React.Component {
 
     handleClick(i) {
 
-
-
-
-
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
@@ -134,6 +130,8 @@ class Game extends React.Component {
             for (let i = 0; i < 3; i++) {
                 document.getElementById(winner[1][i]).style.backgroundColor = "yellow";
             }
+        } else if (this.state.stepNumber === 9) {
+            status = "It's a draw!";
         } else {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
