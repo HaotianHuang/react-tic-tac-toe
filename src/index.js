@@ -55,6 +55,8 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            // -1 is before game starts
+            indexHistory: [-1],
         };
     }
 
@@ -62,6 +64,9 @@ class Game extends React.Component {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
+        const indexHistory = this.state.indexHistory.slice(0, this.state.stepNumber + 1);
+
+        console.log(this.state.currentIndex);
         if (calculateWinner(squares) || squares[i]) {
             return;
         }
@@ -72,6 +77,7 @@ class Game extends React.Component {
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
+            indexHistory: indexHistory.concat(i),
         });
     }
 
@@ -89,9 +95,10 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            console.log(history);
+            console.log(move);
+            const coord = calculateCoordinates(this.state.indexHistory[move]);
             const desc = move ?
-                'Go to move #' + move :
+                'Go to move #' + move + " " + coord:
                 'Go to game start';
             return (
                 <li key={move}>
@@ -144,6 +151,23 @@ function calculateWinner(squares) {
     return null;
 }
 
+// Function that returns an array
+// of the coordinates of the square
+// that was clicked
+function calculateCoordinates(index) {
+    const coordinates = [
+        [0, 0],
+        [0, 1],
+        [0, 2],
+        [1, 0],
+        [1, 1],
+        [1, 2],
+        [2, 0],
+        [2, 1],
+        [2, 2],
+    ];
+    return coordinates[index];
+}
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
