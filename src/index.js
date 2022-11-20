@@ -41,6 +41,7 @@ class Board extends React.Component {
     }
 }
 
+
 class Game extends React.Component {
 
     constructor(props) {
@@ -165,20 +166,15 @@ function calculateWinner(squares) {
 // of the coordinates of the square
 // that was clicked
 function calculateCoordinates(index) {
+    // col, row
     const coordinates = [
-        [0, 0],
-        [0, 1],
-        [0, 2],
-        [1, 0],
-        [1, 1],
-        [1, 2],
-        [2, 0],
-        [2, 1],
-        [2, 2],
+        [0,0],[1,0],[2,0],
+        [0,1],[1,1],[2,1],
+        [0,2],[1,2],[2,2]
     ];
-    if (index != -1){
-        return coordinates[index].reverse();
-    }
+    
+    return coordinates[index];
+
 }
 // ========================================
 
