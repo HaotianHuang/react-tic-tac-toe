@@ -90,20 +90,28 @@ class Game extends React.Component {
 
     render() {
 
+        const active = {
+            fontWeight: 'bold'
+        };
+
+        const inactive = {
+            fontWeight: 'normal'
+        };
+
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
             const coord = (move % 2) === 0 ?
-            "O " + calculateCoordinates(this.state.indexHistory[move]) :
-            "X " + calculateCoordinates(this.state.indexHistory[move])
+            "O," + calculateCoordinates(this.state.indexHistory[move]) :
+            "X," + calculateCoordinates(this.state.indexHistory[move])
             const desc = move ?
-                'Go to move #' + move + " " + coord:
+                'Go to move #' + move + " (" + coord + ")":
                 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <a href="#" style={this.state.stepNumber === move ? active : inactive} onClick={() => this.jumpTo(move)}>{desc}</a>
                 </li>
             );
         });
